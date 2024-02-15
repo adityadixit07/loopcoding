@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  overflow-x: hidden;
+}
+
+li a {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+
+
+.pt-[5rem] {
+  overflow-y: hidden;
+}
+
+.borders {
+  border-width: 3px;
+  /* Set your desired border width */
+  border-style: solid;
+  border-image: linear-gradient(to right, #ff9a9e, #fad0c4);
+  /* Define your gradient colors */
+  border-image-slice: 1;
+  border-radius: 20px;
+}
+
+
+.border-animation {
+  border-width: 2px;
+  border-style: solid;
+  border-image-slice: 1;
+  border-radius: 20px;
+  animation: borderAnimation 3s infinite ease-in-out;
+}
+
+@keyframes borderAnimation {
+  0% {
+    border-color: #8cace1;
+  }
+
+  50% {
+    border-color: #f5da6c;
+  }
+  75% {
+    border-color: #ff9a9e;
+  }
+
+  100% {
+    border-color: #e97eea;
+  }
+}
