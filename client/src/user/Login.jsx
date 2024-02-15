@@ -4,15 +4,20 @@ import "../styles/register.css";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { server } from "../main";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch=useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(`${server}/user/login`, {
         email,
@@ -22,9 +27,12 @@ const Login = () => {
       if (data?.success) {
         toast.success(data?.message);
         navigate("/courses");
+        dispatch(setUser(data));
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,9 +77,17 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded-md"
+            className={`bg-blue-500 text-white p-2 rounded-md relative ${
+              loading && "bg-green-600"
+            }`}
+            disabled={loading}
           >
-            Login
+            {loading && (
+              <div className="absolute inset-0 flex items-center justify-center w-full">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
+              </div>
+            )}
+            {loading ? "Logging in...." : "Login"}
           </button>
         </form>
         <p className="mt-4">

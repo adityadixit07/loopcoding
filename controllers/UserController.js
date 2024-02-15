@@ -75,6 +75,7 @@ class UserController {
       ),
     };
     res.cookie("token", token, cookieOptions);
+    user.password='mat dekh bhai'
     res.status(200).json({
       success: true,
       message: "User logged in successfully",

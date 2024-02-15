@@ -12,8 +12,8 @@ const authSlice = createSlice({
       state.user = null;
       state.error = null;
     },
-    setUser: (state) => {
-      state.user = actions.payload.data;
+    setUser: (state, action) => {
+      state.user = action.payload;
       state.error = null;
     },
   },

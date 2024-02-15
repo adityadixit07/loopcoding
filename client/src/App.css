@@ -11,8 +11,6 @@ li a {
   font-weight: 600;
 }
 
-
-
 .pt-[5rem] {
   overflow-y: hidden;
 }
@@ -26,7 +24,6 @@ li a {
   border-image-slice: 1;
   border-radius: 20px;
 }
-
 
 .border-animation {
   border-width: 2px;
@@ -50,5 +47,34 @@ li a {
 
   100% {
     border-color: #e97eea;
+  }
+}
+
+.navli a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navli a:hover {
+  color: #f5da6c;
+  transition: 0.3s;
+  animation: anim2 500ms ease-in-out;
+}
+
+@keyframes anim2 {
+  0% {
+    opacity: 1;
+    transform: translateY(px);
+  }
+  25% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
   }
 }
