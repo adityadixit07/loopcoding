@@ -23,9 +23,6 @@ app.use(cookieParser({ httpOnly: true }));
 
 dbConnect();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
 
 // routes
 app.use("/api/user", UserRoutes);
