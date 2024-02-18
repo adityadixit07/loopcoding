@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "../styles/register.css";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { clearError, registerUser } from "../redux/userSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -11,33 +11,23 @@ const Register = () => {
   const [cardFlipped, setCardFlipped] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:9898/api/user/register",
-        {
-          name,
-          email,
-          password,
-        }
-      );
-
-      const { data } = response;
-      if (data?.success) {
-        toast.success(data?.message);
-        setRegistrationSuccess(true);
-        setCardFlipped(!cardFlipped);
-        setLoading(true);
-        // set the cookies
-        localStorage.setItem("token", data?.token);
-      }
+      dispatch(registerUser({ name, email, password }));
+      setRegistrationSuccess(true);
+      setCardFlipped(true);
+      setLoading(true);
+      navigator.vibrate(1000); // Vibrate the device on successful registration
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong");
-      setEmail("");
-      setPassword("");
-      setName("");
+      setLoading(false);
+      dispatch(clearError());
+      console.log(error, "error");
+    } finally {
       setLoading(false);
     }
   };

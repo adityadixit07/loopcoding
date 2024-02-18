@@ -123,68 +123,120 @@
 // export default Navbar;
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Assuming you're using React Router for navigation
-import { FiHome, FiBook, FiUsers, FiSettings } from "react-icons/fi"; // Importing icons from react-icons library
+import { Link, useNavigate } from "react-router-dom";
+import { FaBars, FaTimes, FaSearch } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../redux/userSlice";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-
-  const toggleMobileNav = () => {
-    setIsMobileNavOpen(!isMobileNavOpen);
+  const [isOpen, setIsOpen] = useState(false);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    dispatch(logOut());
+    toast.success("Logout successfully");
+    navigate("/login");
   };
 
   return (
-    <nav className="bg-emerald-400 p-8 fixed top-0 left-0 w-full z-50">
-      {/* Desktop Navbar */}
-      <div className="hidden md:flex justify-between items-center ">
-        <Link to="/" className="text-white text-xl font-bold">
-          EdTech
-        </Link>
-        <div className="flex gap-10">
-          <Link to="/" className="text-white mr-4 text-xl font-semibold">
-            <FiHome className="inline mr-1" /> Login
-          </Link>
-          <Link to="/courses" className="text-white mr-4">
-            <FiBook className="inline mr-1" /> Courses
-          </Link>
-          <Link to="/contact" className="text-white mr-4">
-            <FiUsers className="inline mr-1" /> Contact
-          </Link>
-          <Link to="/about" className="text-white">
-            <FiSettings className="inline mr-1" /> About
-          </Link>
-        </div>
-      </div>
-
-      {/* mobile navbar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-blue-500 p-4 z-10">
-        <div className="flex justify-between items-center navli">
-          <Link to="/login" className="text-white">
-            <FiHome className="inline mr-1" />
-            <span>Login</span>
-            <span className="hidden md:inline">Login</span>
-          </Link>
+    <div className="bg-white shadow-md p-6 fixed w-full z-10">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="brand">
           <Link
-            to="/courses"
-            className="text-white"
+            to={"/"}
+            className="font-semibold text-xl text-emerald-800"
+            style={{ fontFamily: "cursive" }}
           >
-            <FiBook className="inline mr-1" />
-            <span>Courses</span>
-            <span className="hidden md:inline">Courses</span>
-          </Link>
-          <Link to="/contact" className="text-white">
-            <FiUsers className="inline mr-1" />
-            <span>Contact</span>
-            <span className="hidden md:inline">Contact</span>
-          </Link>
-          <Link to="/about" className="text-white">
-            <FiSettings className="inline mr-1" />
-            <span>About</span>
-            <span className="hidden md:inline">About</span>
+            LiveCoding.in
           </Link>
         </div>
+        <div className="content hidden md:flex items-center justify-between gap-10">
+          <ul className="flex items-center justify-between gap-10">
+            <li className="mr-5">
+              <Link to={isLoggedIn ? "/" : "/login"}>
+                {isLoggedIn ? "Home" : "Login"}
+              </Link>
+            </li>
+            <li className="mr-5">
+              <Link to={"/courses"}>Courses</Link>
+            </li>
+            <li className="mr-5">
+              <Link to={"/blogs"}>Blogs</Link>
+            </li>
+            <li className="mr-5">
+              <Link to={"/contact"}>Contact</Link>
+            </li>
+            {isLoggedIn && (
+              <li className="mr-5">
+                <Link onClick={handleLogout}>Logout</Link>
+              </li>
+            )}
+          </ul>
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="py-2 pl-8 pr-4 border rounded-full focus:outline-none focus:border-emerald-500"
+            />
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <FaSearch className="text-gray-500 border-b-2 " />
+            </div>
+          </div>
+        </div>
+        <div className="md:hidden">
+          <button onClick={toggleMenu} className="text-xl focus:outline-none">
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
       </div>
-    </nav>
+      {isOpen && (
+        <div className="md:hidden fixed bottom-0 left-0 bg-white bg-opacity-90 w-full z-50 shadow-lg">
+          <ul className="flex justify-between py-4 px-6">
+            <li>
+              <Link
+                to={"/login"}
+                onClick={toggleMenu}
+                className="text-emerald-800"
+              >
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/courses"}
+                onClick={toggleMenu}
+                className="text-emerald-800"
+              >
+                Courses
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/blogs"}
+                onClick={toggleMenu}
+                className="text-emerald-800"
+              >
+                Blogs
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/contact"}
+                onClick={toggleMenu}
+                className="text-emerald-800"
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
   );
 };
 

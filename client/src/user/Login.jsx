@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/register.css";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { server } from "../main";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/userSlice";
+import { clearError, loginUser } from "../redux/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,24 +10,17 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(`${server}/user/login`, {
-        email,
-        password,
-      });
-      const { data } = response;
-      if (data?.success) {
-        toast.success(data?.message);
-        navigate("/courses");
-        dispatch(setUser(data));
-      }
+      const action = dispatch(loginUser({ email, password }));
+      await action.unwrap(); // This will throw the error if any error occurs
+      navigate("/");
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong");
+      dispatch(clearError());
     } finally {
       setLoading(false);
     }
