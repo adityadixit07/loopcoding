@@ -11,6 +11,6 @@ UserRoutes.route("/addcourse/:courseId").post(
   UserController.addCourseToCart
 );
 
-// user route 
+// user route
 
 export default UserRoutes;

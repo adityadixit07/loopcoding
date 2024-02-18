@@ -68,4 +68,3 @@ export const authorize = async (req, res, next) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
