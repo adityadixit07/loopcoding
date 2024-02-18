@@ -22,7 +22,7 @@ const Register = () => {
       setRegistrationSuccess(true);
       setCardFlipped(true);
       setLoading(true);
-      navigator.vibrate(1000); // Vibrate the device on successful registration
+      navigator.vibrate(500); 
     } catch (error) {
       setLoading(false);
       dispatch(clearError());

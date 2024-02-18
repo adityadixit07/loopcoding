@@ -19,6 +19,7 @@ AdminRoutes.route("/delete-course/:courseId").delete(
   authorizeAdminToken,
   CourseController.deleteCourse
 );
+
 AdminRoutes.route("/update-course/:courseId").put(
   authorizeAdminToken,
   CourseController.updateCourse

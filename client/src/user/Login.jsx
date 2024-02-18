@@ -19,6 +19,7 @@ const Login = () => {
       const action = dispatch(loginUser({ email, password }));
       await action.unwrap(); // This will throw the error if any error occurs
       navigate("/");
+      navigator.vibrate(500);
     } catch (error) {
       dispatch(clearError());
     } finally {
