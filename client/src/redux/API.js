@@ -5,6 +5,7 @@ const server = "http://localhost:9898/api";
 
 const API = axios.create({
   baseURL: server,
+  // baseURL: "/api",
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {

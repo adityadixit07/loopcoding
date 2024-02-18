@@ -40,7 +40,7 @@ export const authorizeAdminToken = async (req, res, next) => {
   }
 };
 
-const authorize = async (req, res, next) => {
+export const authorize = async (req, res, next) => {
   const token = req.headers["authorization"].split(" ")[1].trim();
   // console.log(token);
   if (!token)
@@ -69,4 +69,3 @@ const authorize = async (req, res, next) => {
   }
 };
 
-export default authorize;
