@@ -2,7 +2,7 @@ import express from "express";
 import { loginAdmin } from "../controllers/AdminController.js";
 import authorizeAdmin from "../utils/authorizeAdmin.js";
 import CourseController from "../controllers/CourseController.js";
-import { authorizeAdminToken } from "../utils/Authorize.js";
+import { authorizeAdminToken } from "../utils/AuthorizeUtils.js";
 
 const AdminRoutes = express.Router();
 

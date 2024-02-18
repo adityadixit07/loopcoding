@@ -1,7 +1,6 @@
 import express from "express";
 import UserController from "../controllers/UserController.js";
-import { authorize } from "../utils/Authorize.js";
-
+import { authorize } from "../utils/AuthorizeUtils.js";
 
 const UserRoutes = express.Router();
 
@@ -12,6 +11,5 @@ UserRoutes.route("/addcourse/:courseId").post(
   authorize,
   UserController.addCourseToCart
 );
-
 
 export default UserRoutes;
