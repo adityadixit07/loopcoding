@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import Heading from "./Heading";
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
+import { FiUsers } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
   const { courses, isLoading } = useSelector((state) => state.courses);
+  // Memoize the CourseCard components to cache them
+  const memoizedCourseCards = useMemo(
+    () =>
+      courses?.data?.map((course) => (
+        <CourseCard key={course._id} course={course} />
+      )),
+    [courses]
+  );
 
   return (
     <div className="pt-[8rem]">
@@ -16,13 +26,11 @@ const Courses = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
-          {courses?.data?.map((course) => (
-            <CourseCard key={course._id} course={course} />
-          ))}
+          {memoizedCourseCards}
         </div>
       )}
 
-      <div className="flex justify-center items-center mt-8">
+      <div className="flex justify-center items-center mt-8 text-red-600 font-semibold text-lg bg-black">
         <Typewriter
           options={{
             strings: [
@@ -31,6 +39,8 @@ const Courses = () => {
             ],
             autoStart: true,
             loop: true,
+            infinite: true,
+            delay: 80,
           }}
         />
       </div>
@@ -43,6 +53,10 @@ export default Courses;
 export const CourseCard = ({ course }) => {
   const discountedPrice = course.price - (course.price * course.discount) / 100;
   const discountPercentage = course.discount;
+  const navigate = useNavigate();
+  const handlePurchase = () => {
+    navigate("/profile");
+  };
 
   return (
     <motion.div
@@ -70,7 +84,14 @@ export const CourseCard = ({ course }) => {
           <p className="text-gray-700">({discountPercentage}% Off)</p>
         </div>
       </div>
-      <button className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600">
+      <div className="flex items-center mt-2">
+        <FiUsers className="text-gray-600 mr-2" />
+        <p className="text-gray-600">{course.totalStudents} Enrolled</p>
+      </div>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600"
+        onClick={handlePurchase}
+      >
         Purchase Now
       </button>
     </motion.div>

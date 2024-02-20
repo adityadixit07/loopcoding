@@ -12,6 +12,6 @@ UserRoutes.route("/addcourse/:courseId").post(
   UserController.addCourseToCart
 );
 
-UserRoutes.route("/user-profile").get(authorize, UserController.userProfile);
+UserRoutes.route("/profile").get(authorize, UserController.userProfile);
 
 export default UserRoutes;

@@ -6,6 +6,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: [],
+    profile: [],
     error: null,
     isLoggedIn: false,
   },
@@ -35,6 +36,19 @@ const authSlice = createSlice({
       state.user = null;
       state.error = action.payload;
       state.isLoggedIn = false;
+    });
+
+    builder.addCase(userProfile.pending, (state) => {
+      state.profile = [];
+      state.error = null;
+    });
+    builder.addCase(userProfile.fulfilled, (state, action) => {
+      state.profile = action.payload;
+      state.error = null;
+    });
+    builder.addCase(userProfile.rejected, (state, action) => {
+      state.profile = [];
+      state.error = action.payload;
     });
   },
 });
@@ -94,7 +108,21 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-
+export const userProfile = createAsyncThunk(
+  "auth/userProfile",
+  async ({ _ }, { rejectWithValue }) => {
+    try {
+      const response = await API.get("/user/profile");
+      const { data } = response;
+      return data;
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+      }
+      return rejectWithValue(error?.response?.data?.message);
+    }
+  }
+);
 
 export const { logOut, clearError } = authSlice.actions;
 export default authSlice.reducer;

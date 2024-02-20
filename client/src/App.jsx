@@ -26,7 +26,7 @@ const App = () => {
         <Route path="*" element={<PageNotFound />} />
 
         {/* user */}
-        <Route path="/user-profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
 
 
 
