@@ -118,14 +118,63 @@ class CourseController {
     }
   };
 
-
   // ------------------user-----------------
   //   get all courses
+  // static getAllCourses = async (req, res) => {
+  //   try {
+  //     const courses = await Course.find({});
+  //     console.log(courses);
+  //     if (courses.length === 0) {
+  //       return res.status(404).json({
+  //         success: false,
+  //         message: "No courses found",
+  //       });
+  //     }
+  //     const courseData = await Promise.all(
+  //       courses.map(async (course) => {
+  //         const admin = await Admin.findById(course.createdBy);
+  //         return {
+  //           ...course._doc,
+  //           createdBy: admin.name,
+  //         };
+  //       })
+  //     );
+  //     res.status(200).json({
+  //       data: courseData,
+  //       message: "Courses fetched successfully",
+  //       success: true,
+  //     });
+  //   } catch (error) {
+  //     res.status(500).json({ success: false, message: error.message });
+  //   }
+  // };
   static getAllCourses = async (req, res) => {
     try {
       const courses = await Course.find({});
+      if (courses.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "No courses found",
+        });
+      }
+      const courseData = await Promise.all(
+        courses.map(async (course) => {
+          const admin = await Admin.findById(course.createdBy);
+          // Check if admin exists
+          if (!admin) {
+            return {
+              ...course._doc,
+              createdBy: "Unknown", // Or any default value
+            };
+          }
+          return {
+            ...course._doc,
+            createdBy: admin.name,
+          };
+        })
+      );
       res.status(200).json({
-        data: courses,
+        data: courseData,
         message: "Courses fetched successfully",
         success: true,
       });
@@ -165,8 +214,6 @@ class CourseController {
       res.status(500).json({ success: false, message: error.message });
     }
   };
-
-  
 }
 
 export default CourseController;

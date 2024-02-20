@@ -83,7 +83,6 @@ export const registerUser = createAsyncThunk(
       if (data?.success) {
         toast.success(data?.message);
         localStorage.setItem("token", data?.token);
-        
       }
       return data;
     } catch (error) {
@@ -94,6 +93,8 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
+
 
 export const { logOut, clearError } = authSlice.actions;
 export default authSlice.reducer;

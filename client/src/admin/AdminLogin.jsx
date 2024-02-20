@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/register.css";
 import { useDispatch } from "react-redux";
-import { clearError, loginUser } from "../redux/userSlice";
+import { adminLogin, clearError } from "../redux/adminSlice";
 
-const Login = () => {
+const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,14 +16,12 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const action = dispatch(loginUser({ email, password }));
-      await action.unwrap(); // This will throw the error if any error occurs
-      navigate("/");
+      const action = dispatch(adminLogin({ email, password }));
+      await action.unwrap();
+      navigate("/dashboard");
       navigator.vibrate(500);
-      setLoading(true);
     } catch (error) {
       dispatch(clearError());
-      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -83,15 +81,9 @@ const Login = () => {
             {loading ? "Logging in...." : "Login"}
           </button>
         </form>
-        <p className="mt-4">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-500">
-            Register
-          </Link>
-        </p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default AdminLogin;

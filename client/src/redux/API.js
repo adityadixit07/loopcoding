@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // const server = "http://localhost:9898/api";
-const server="https://courseapp-loopcoding.onrender.com"
+const server = "https://courseapp-loopcoding.onrender.com";
 
 const API = axios.create({
   // baseURL: server,
@@ -11,7 +11,7 @@ const API = axios.create({
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
-    console.log(req.headers,"req.headers");
+    console.log(req.headers, "req.headers");
     req.headers.cookie = `token=${localStorage.getItem("token")}`;
   }
   return req;
