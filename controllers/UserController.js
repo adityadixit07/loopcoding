@@ -78,7 +78,7 @@ class UserController {
     user.password = "mat dekh bhai";
     res.status(200).json({
       success: true,
-      message: "User logged in successfully",
+      message: `Welcome back, ${user.name}! Happy Learning 🚀`,
       data: user,
       token,
     });

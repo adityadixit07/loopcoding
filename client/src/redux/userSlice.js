@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: [],
-    profile: [],
+    // user: [],
+    user: null,
     error: null,
     isLoggedIn: false,
   },
@@ -18,6 +18,11 @@ const authSlice = createSlice({
     },
     clearError: (state) => {
       state.error = null;
+    },
+    updateStateOnRegister: (state, action) => {
+      state.user = action.payload;
+      state.error = null;
+      state.isLoggedIn = true;
     },
   },
   extraReducers: (builder) => {
@@ -36,19 +41,6 @@ const authSlice = createSlice({
       state.user = null;
       state.error = action.payload;
       state.isLoggedIn = false;
-    });
-
-    builder.addCase(userProfile.pending, (state) => {
-      state.profile = [];
-      state.error = null;
-    });
-    builder.addCase(userProfile.fulfilled, (state, action) => {
-      state.profile = action.payload;
-      state.error = null;
-    });
-    builder.addCase(userProfile.rejected, (state, action) => {
-      state.profile = [];
-      state.error = action.payload;
     });
   },
 });
@@ -108,21 +100,5 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const userProfile = createAsyncThunk(
-  "auth/userProfile",
-  async ({ _ }, { rejectWithValue }) => {
-    try {
-      const response = await API.get("/user/profile");
-      const { data } = response;
-      return data;
-    } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error?.response?.data?.message);
-      }
-      return rejectWithValue(error?.response?.data?.message);
-    }
-  }
-);
-
-export const { logOut, clearError } = authSlice.actions;
+export const { logOut, clearError,updateStateOnRegister } = authSlice.actions;
 export default authSlice.reducer;

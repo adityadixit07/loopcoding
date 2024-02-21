@@ -12,7 +12,11 @@ import PageNotFound from "./components/PageNotFound";
 import AdminLogin from "./admin/AdminLogin";
 import DashBoard from "./admin/DashBoard";
 import Profile from "./user/Profile";
+import { useSelector } from "react-redux";
+import UserCart from "./user/UserCart";
+// import PrivateRoute from "./utils/PrivateRoute";
 const App = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <BrowserRouter>
       <Navbar />
@@ -27,9 +31,7 @@ const App = () => {
 
         {/* user */}
         <Route path="/profile" element={<Profile />} />
-
-
-
+        <Route path="/cart" element={<UserCart />} />
 
         {/* instructors */}
         <Route path="/instructor-profile" element={<InstructorProfile />} />

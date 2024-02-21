@@ -2,7 +2,11 @@ import { useState } from "react";
 import "../styles/register.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { clearError, registerUser } from "../redux/userSlice";
+import {
+  clearError,
+  registerUser,
+  updateStateOnRegister,
+} from "../redux/userSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -18,10 +22,11 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      dispatch(registerUser({ name, email, password }));
+      const action = dispatch(registerUser({ name, email, password }));
       setRegistrationSuccess(true);
       setCardFlipped(true);
       setLoading(true);
+      dispatch(updateStateOnRegister(action.payload));
       navigator.vibrate(500);
     } catch (error) {
       setLoading(false);

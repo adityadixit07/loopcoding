@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
 import { FiUsers } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import Loader from "../assets/Loader";
+import toast from "react-hot-toast";
 
 const Courses = () => {
   const { courses, isLoading } = useSelector((state) => state.courses);
@@ -16,13 +18,13 @@ const Courses = () => {
       )),
     [courses]
   );
-
   return (
     <div className="pt-[8rem]">
       <Heading text={"Explore our Courses"} />
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <p className="text-gray-500">Loading...</p>
+          {/* <p className="text-gray-500">Loading...</p> */}
+          <Loader />
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
@@ -53,9 +55,8 @@ export default Courses;
 export const CourseCard = ({ course }) => {
   const discountedPrice = course.price - (course.price * course.discount) / 100;
   const discountPercentage = course.discount;
-  const navigate = useNavigate();
   const handlePurchase = () => {
-    navigate("/profile");
+    toast.success("Wait few days..... You can able to do purchase very soon");
   };
 
   return (

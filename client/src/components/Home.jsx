@@ -62,8 +62,7 @@ const Home = () => {
         </div>
       </section>
 
-      <AssistanceBoard/>
-
+      <AssistanceBoard />
 
       {/* footer  */}
       <Footer />
