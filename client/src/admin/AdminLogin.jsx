@@ -18,7 +18,7 @@ const AdminLogin = () => {
     try {
       const action = dispatch(adminLogin({ email, password }));
       await action.unwrap();
-      navigate("/dashboard");
+      navigate("/admin/dashboard");
       navigator.vibrate(500);
     } catch (error) {
       dispatch(clearError());

@@ -14,9 +14,12 @@ import DashBoard from "./admin/DashBoard";
 import Profile from "./user/Profile";
 import { useSelector } from "react-redux";
 import UserCart from "./user/UserCart";
+import AdminRoute from "./AdminRoute";
+import CourseForm from "./admin/CourseForm";
 // import PrivateRoute from "./utils/PrivateRoute";
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   return (
     <BrowserRouter>
       <Navbar />
@@ -38,7 +41,11 @@ const App = () => {
 
         {/* admin */}
         <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/dashboard" element={<DashBoard />} />
+
+        <Route element={<AdminRoute isAdmin={isAdmin} />}>
+          <Route path="/admin/dashboard" element={<DashBoard />} />
+          <Route path="/admin/course-form" element={<CourseForm />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
