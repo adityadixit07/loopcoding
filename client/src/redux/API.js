@@ -1,12 +1,12 @@
 // axios interceptor
 import axios from "axios";
 
-// const server = "http://localhost:9898/api";
-const server = "https://courseapp-loopcoding.onrender.com";
+const server = "http://localhost:9898/api";
+// const server = "https://courseapp-loopcoding.onrender.com";
 
 const API = axios.create({
-  // baseURL: server,
-  baseURL: "/api",
+  baseURL: server,
+  // baseURL: "/api",
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
