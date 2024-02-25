@@ -19,6 +19,7 @@ import CourseForm from "./admin/CourseForm";
 import PrivateRoute from "./utils/PrivateRoute";
 import { useEffect, useState } from "react";
 import { Loading } from "./assets/Loader";
+import CourseDetail from "./components/CourseDetail";
 const App = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { isAdmin } = useSelector((state) => state.admin);
@@ -40,7 +41,10 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+
         <Route path="/courses" element={<Courses />} />
+        <Route path="/course/:title/:id" element={<CourseDetail />} />
+
         <Route path="/blogs" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<PageNotFound />} />

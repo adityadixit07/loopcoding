@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 
 const Courses = () => {
   const { courses, isLoading } = useSelector((state) => state.courses);
-  // Memoize the CourseCard components to cache them
   const memoizedCourseCards = useMemo(
     () =>
       courses?.data?.map((course) => (
@@ -23,7 +22,6 @@ const Courses = () => {
       <Heading text={"Explore our Courses"} />
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          {/* <p className="text-gray-500">Loading...</p> */}
           <Loader />
         </div>
       ) : (
@@ -58,6 +56,7 @@ export const CourseCard = ({ course }) => {
   const handlePurchase = () => {
     toast.success("Wait few days..... You can able to do purchase very soon");
   };
+  const navigate = useNavigate();
 
   return (
     <motion.div
@@ -65,15 +64,34 @@ export const CourseCard = ({ course }) => {
       whileHover={{ scale: 1.05 }}
     >
       <img
-        src={
-          // course.thumbnail.image ||
-          "https://img.freepik.com/free-vector/hacker-operating-laptop-cartoon-icon-illustration-technology-icon-concept-isolated-flat-cartoon-style_138676-2387.jpg?size=338&ext=jpg&ga=GA1.1.1448711260.1707004800&semt=sph"
-        }
+        src={course?.thumbnail?.image}
         alt={course.title}
         className="object-contain w-full h-32 mb-4 rounded-md"
       />
-      <h3 className="text-xl font-bold mb-2">{course.title}</h3>
+      <h3
+        className="text-xl font-bold mb-2 hover:underline hover:text-emerald-800 hover:ease-linear"
+        onClick={() => {
+          const formattedTitle = course.title.replace(/\s+/g, "-"); // Replace spaces with hyphens
+          navigate(`/course/${formattedTitle}/${course._id}`);
+        }}
+      >
+        {course.title}
+      </h3>
       <p className="text-gray-700 mb-4">{course.description}</p>
+      <div className="flex justify-between items-center">
+        {/* toic tags */}
+        <div className="flex justify-start items-center flex-row  gap-3 flex-wrap">
+          {course.topicTags?.map((tag, index) => (
+            <span
+              key={index}
+              className="border shadow-innner text-gray-700  rounded-md px-2 py-1"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="flex justify-between items-center">
         <div>
           <p className="text-emerald-500 font-bold">Price: ₹{course.price}</p>
@@ -87,7 +105,7 @@ export const CourseCard = ({ course }) => {
       </div>
       <div className="flex items-center mt-2">
         <FiUsers className="text-gray-600 mr-2" />
-        <p className="text-gray-600">{course.totalStudents} Enrolled</p>
+        <p className="text-gray-600">{course.Enrolled} Enrolled</p>
       </div>
       <button
         className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600"
