@@ -79,5 +79,37 @@ li a {
   }
 }
 
+.testimonials-slider:hover {
+  border: 2px solid #f5da6c;
+}
 
+.running-line li a {
+  position: relative;
+}
 
+.running-line li a:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: #FFA500; /* Change color as needed */
+  animation: running-line 1s infinite;
+}
+
+ 
+@keyframes running-line {
+  0% {
+    left: 0;
+    width: 0;
+  }
+  50% {
+    left: 0;
+    width: 100%;
+  }
+  100% {
+    left: 100%;
+    width: 0;
+  }
+}

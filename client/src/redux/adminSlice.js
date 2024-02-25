@@ -10,7 +10,7 @@ const adminSlice = createSlice({
     isAdmin: false,
   },
   reducers: {
-    logOut: (state) => {
+    AdminlogOut: (state) => {
       state.admin = null;
       state.error = null;
       state.isAdmin = false;
@@ -57,7 +57,7 @@ export const adminLogin = createAsyncThunk(
       }
       return data;
     } catch (error) {
-        console.log(error?.response?.data?.message)
+      console.log(error?.response?.data?.message);
       if (error?.response?.data?.message) {
         toast.error(error?.response?.data?.message);
       }
@@ -66,5 +66,5 @@ export const adminLogin = createAsyncThunk(
   }
 );
 
-export const { logOut, clearError } = adminSlice.actions;
+export const { AdminlogOut, clearError } = adminSlice.actions;
 export default adminSlice.reducer;

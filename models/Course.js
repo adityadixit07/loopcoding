@@ -1,69 +1,71 @@
 import mongoose from "mongoose";
 
-const courseSchema = new mongoose.Schema({
-  createdBy:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Admin",
-    required: true,
-  },
-  title: {
-    type: String,
-    required: [true, "Please provide a title"],
-  },
-  description: {
-    type: String,
-    required: [true, "Please provide a description"],
-  },
-  totalPrice:{
-    type:Number,
-    required:true
-  },
-  price: {
-    type: Number,
-    required: [true, "Please provide a price"],
-  },
-  discount: {
-    type: Number,
-    default: 0,
-    min: 0,
-    max: 100,
-  },
-  thumbnail: {
-    image: {
-      type: String,
-      required: [true, "Please provide an image/thumbnail"],
+const courseSchema = new mongoose.Schema(
+  {
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin",
+      required: true,
     },
-    public_id: {
+    title: {
       type: String,
-      required: [true, "Please provide a cloudinary_id/public_id"],
+      required: [true, "Please provide a title"],
     },
-  },
-  topicTags: {
-    type: [String],
-    required: [true, "Please provide topic tags"],
-  },
-  modules: [
-    {
-      title: {
+    description: {
+      type: String,
+      required: [true, "Please provide a description"],
+    },
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: [true, "Please provide a price"],
+    },
+    discount: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
+    thumbnail: {
+      image: {
         type: String,
-        required: [true, "Please provide a module title"],
+        required: [true, "Please provide an image/thumbnail"],
       },
-      description: {
+      public_id: {
         type: String,
-        required: [true, "Please provide a module description"],
+        required: [true, "Please provide a cloudinary_id/public_id"],
       },
     },
-  ],
-  Enrolled: {
-    type: Number,
-    default: 0,
+    topicTags: {
+      type: [String],
+      required: [true, "Please provide topic tags"],
+    },
+    modules: [
+      {
+        title: {
+          type: String,
+          required: [true, "Please provide a module title"],
+        },
+        description: {
+          type: String,
+          required: [true, "Please provide a module description"],
+        },
+      },
+    ],
+    Enrolled: {
+      type: Number,
+      default: 0,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-
-},{timestamps:true});
+  { timestamps: true }
+);
 
 courseSchema.methods.calculateDiscountedPrice = function () {
   return (this.price * (100 - this.discount)) / 100;

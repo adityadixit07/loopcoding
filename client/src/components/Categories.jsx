@@ -50,13 +50,16 @@ const Categories = () => {
   };
 
   return (
-    <section className="bg-gray-100 py-8">
+    <section className="bg-gray-50 py-8 ">
       <Heading text={"Popular Categories"} />
       <div className="container mx-auto text-center overflow-y-hidden">
-        <div className="overflow-y-hidden">
-          <Slider {...slickSettings} className="overflow-y-hidden">
+        <div className="overflow-x-hidden">
+          <Slider
+            {...slickSettings}
+            className="overflow-y-hidden overflow-x-hidden"
+          >
             {techStackItems.map((item) => (
-              <div key={item.id} className=" py-8 overflow-y-hidden">
+              <div key={item.id} className=" py-8 overflow-x-hidden ">
                 <div className="rounded-full w-24 h-24 mx-auto">
                   <img
                     src={item.image}

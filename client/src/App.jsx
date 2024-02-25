@@ -16,10 +16,10 @@ import { useSelector } from "react-redux";
 import UserCart from "./user/UserCart";
 import AdminRoute from "./AdminRoute";
 import CourseForm from "./admin/CourseForm";
-// import PrivateRoute from "./utils/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
 const App = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isAdmin } = useSelector((state) => state.admin);
   return (
     <BrowserRouter>
       <Navbar />
@@ -33,8 +33,10 @@ const App = () => {
         <Route path="*" element={<PageNotFound />} />
 
         {/* user */}
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/cart" element={<UserCart />} />
+        <Route element={<PrivateRoute isLoggedIn={isLoggedIn} />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/cart" element={<UserCart />} />
+        </Route>
 
         {/* instructors */}
         <Route path="/instructor-profile" element={<InstructorProfile />} />

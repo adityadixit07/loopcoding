@@ -36,24 +36,25 @@ const Testimonials = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 10000,
+    autoplaySpeed: 1000,
   };
 
   return (
     <section className="py-16 px-10">
       <Heading text={"What our students say"} />
       <div className="container mx-auto text-center overflow-y-hidden">
-        {/* Show carousel only on phone view */}
         <div className="lg:hidden">
-          <Slider {...slickSettings} className="overflow-y-hidden py-8">
+          <Slider
+            {...slickSettings}
+            className="overflow-y-hidden py-8 overflow-x-hidden"
+          >
             {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="overflow-y-hidden">
+              <div key={testimonial.id} className="overflow-y-hidden px-3">
                 <div className="bg-white p-6 rounded-md shadow-md border-2 border-gray-200 overflow-y-hidden">
                   <p className="text-gray-700 mb-4 relative overflow-y-hidden">
-                    <span className="overflow-y-hidden absolute top-0 left-0 text-emerald-500 text-3xl -mt-2">
-                      &#8220;
-                    </span>
+                    {`" `}
                     {testimonial.comment}
+                    {` "`}
                   </p>
                   <p className="text-emerald-500 font-bold">
                     {testimonial.name}
@@ -66,17 +67,16 @@ const Testimonials = () => {
         </div>
 
         {/* Show regular testimonials on desktop view */}
-        <div className="hidden lg:flex lg:justify-between   gap-6 overflow-y-hidden">
+        <div className="hidden lg:flex lg:justify-between gap-6 overflow-y-hidden ">
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="bg-white p-6 rounded-md shadow-md border-2 border-gray-200"
+              className="bg-white p-6 rounded-md shadow-md border-2 border-gray-200 testimonials-slider"
             >
               <p className="text-gray-700 mb-4 relative overflow-y-hidden">
-                <span className="overflow-y-hidden absolute top-0 left-0 text-emerald-500 text-3xl -mt-2">
-                  &#8220;
-                </span>
+                {`" `}
                 {testimonial.comment}
+                {` "`}
               </p>
               <p className="text-emerald-500 font-bold">{testimonial.name}</p>
               <p className="text-gray-500">{testimonial.position}</p>
