@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import Heading from "./Heading";
 import { motion } from "framer-motion";
-import Typewriter from "typewriter-effect";
 import { FiUsers } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Loader from "../assets/Loader";
 import toast from "react-hot-toast";
+import { GoArrowUpRight } from "react-icons/go";
 
 const Courses = () => {
   const { courses, isLoading } = useSelector((state) => state.courses);
@@ -18,7 +18,7 @@ const Courses = () => {
     [courses]
   );
   return (
-    <div className="pt-[8rem]">
+    <div className="pt-[6rem] pb-6">
       <Heading text={"Explore our Courses"} />
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
@@ -29,21 +29,6 @@ const Courses = () => {
           {memoizedCourseCards}
         </div>
       )}
-
-      <div className="flex justify-center items-center mt-8 text-red-600 font-semibold text-lg bg-black">
-        <Typewriter
-          options={{
-            strings: [
-              "Hurry! Limited seats available.",
-              "Enroll now and start learning!",
-            ],
-            autoStart: true,
-            loop: true,
-            infinite: true,
-            delay: 80,
-          }}
-        />
-      </div>
     </div>
   );
 };
@@ -69,14 +54,18 @@ export const CourseCard = ({ course }) => {
         className="object-contain w-full h-32 mb-4 rounded-md"
       />
       <h3
-        className="text-xl font-bold mb-2 hover:underline hover:text-emerald-800 hover:ease-linear"
+        className="text-xl font-bold mb-2 underline hover:text-emerald-800 hover:ease-linear transition-transform duration-300 flex items-center justify-start gap-1"
         onClick={() => {
           const formattedTitle = course.title.replace(/\s+/g, "-"); // Replace spaces with hyphens
           navigate(`/course/${formattedTitle}/${course._id}`);
         }}
       >
         {course.title}
+        <span className="text-xl font-semibold">
+          <GoArrowUpRight />
+        </span>
       </h3>
+
       <p className="text-gray-700 mb-4">{course.description}</p>
       <div className="flex justify-between items-center">
         {/* toic tags */}
