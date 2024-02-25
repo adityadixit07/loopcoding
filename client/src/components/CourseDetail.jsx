@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiClock, FiUsers, FiChevronDown } from "react-icons/fi";
@@ -10,24 +10,6 @@ const CourseDetail = () => {
   const { title, id } = useParams();
   const { courses } = useSelector((state) => state.courses);
 
-  const [modules] = useState([
-    {
-      title: "Module 1",
-      description:
-        "This is module 1 description. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque nobis, sint eligendi ullam dicta recusandae est aspernatur officiis fugit, expedita possimus nemo debitis?",
-    },
-
-    {
-      title: "Module 2",
-      description:
-        "This is module 2 description. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque nobis, sint eligendi ullam dicta recusandae est aspernatur officiis fugit, expedita possimus nemo debitis?",
-    },
-    {
-      title: "Module 3",
-      description:
-        "This is module 3 description. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque nobis, sint eligendi ullam dicta recusandae est aspernatur officiis fugit, expedita possimus nemo debitis?",
-    },
-  ]);
   const course = useMemo(
     () => courses?.data?.find((course) => course._id === id),
     [courses, id]
@@ -82,44 +64,46 @@ const CourseDetail = () => {
               </p>
             </div>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="col-span-2 bg-white p-6 rounded-lg shadow-lg border border-orange-400"
-          >
-            <h2 className="text-xl font-bold mb-4">Course Modules</h2>
-            <ul className="space-y-4">
-              {modules.map((module, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <details className="mb-2">
-                    <summary className="flex items-center justify-between cursor-pointer bg-gray-100 rounded-lg px-4 py-2">
-                      <span className="font-semibold">{module.title}</span>
-                      <FiChevronDown className="text-gray-500" />
-                    </summary>
-                    <p>{module.description}</p>
-                  </details>
-                </motion.li>
-              ))}
-            </ul>
-            <div className="mt-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">Sample Video</h2>
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/dQw4w9WgXceQ"
-                title="Sample Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </motion.div>
+          {course?.modules && course?.modules.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="col-span-2 bg-white p-6 rounded-lg shadow-lg border border-orange-400"
+            >
+              <h2 className="text-xl font-bold mb-4">Course Modules</h2>
+              <ul className="space-y-4">
+                {course.modules.map((module, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <details className="mb-2">
+                      <summary className="flex items-center justify-between cursor-pointer bg-gray-100 rounded-lg px-4 py-2">
+                        <span className="font-semibold">{module.title}</span>
+                        <FiChevronDown className="text-gray-500" />
+                      </summary>
+                      <p>{module.description}</p>
+                    </details>
+                  </motion.li>
+                ))}
+              </ul>
+              <div className="mt-8 text-center">
+                <h2 className="text-2xl font-bold mb-4">Sample Video</h2>
+                <iframe
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/dQw4w9WgXceQ"
+                  title="Sample Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
     </motion.div>

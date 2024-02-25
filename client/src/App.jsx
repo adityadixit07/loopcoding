@@ -20,6 +20,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { useEffect, useState } from "react";
 import { Loading } from "./assets/Loader";
 import CourseDetail from "./components/CourseDetail";
+import UpdateCourse from "./admin/UpdateCourse";
 const App = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { isAdmin } = useSelector((state) => state.admin);
@@ -63,7 +64,9 @@ const App = () => {
 
         <Route element={<AdminRoute isAdmin={isAdmin} />}>
           <Route path="/admin/dashboard" element={<DashBoard />} />
-          <Route path="/admin/course-form" element={<CourseForm />} />
+          <Route path="/admin/create-course" element={<CourseForm />} />
+          {/* edit particular course */}
+          <Route path="/admin/edit-course/:title/:id" element={<UpdateCourse />} />
         </Route>
       </Routes>
     </BrowserRouter>

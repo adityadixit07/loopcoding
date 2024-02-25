@@ -12,6 +12,9 @@ const courseSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+    updateCourseDetail: (state, action) => {
+      state.courses = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllCourses.pending, (state) => {
@@ -47,4 +50,4 @@ export const getAllCourses = createAsyncThunk(
 );
 
 export default courseSlice.reducer;
-export const { clearError } = courseSlice.actions;
+export const { clearError, updateCourseDetail } = courseSlice.actions;

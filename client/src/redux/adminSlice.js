@@ -68,5 +68,40 @@ export const adminLogin = createAsyncThunk(
   }
 );
 
+
+export const addModules=createAsyncThunk(
+  "admin/addModules",
+  async ({ courseId, modules }, { rejectWithValue }) => {
+    try {
+      const response = await API.put(
+        `/admin/add-module/${courseId}`,
+        modules,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const { data } = response;
+      if (data?.success) {
+        toast.success(data?.message);
+      }
+      return data;
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      if (error?.response?.data?.message) {
+        toast.error(error?.response?.data?.message);
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
+
+
+
+
 export const { AdminlogOut, clearError } = adminSlice.actions;
 export default adminSlice.reducer;

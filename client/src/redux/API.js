@@ -1,5 +1,6 @@
 // axios interceptor
 import axios from "axios";
+import { MdLandslide } from "react-icons/md";
 
 // const server = "http://localhost:9898/api";
 const server = "https://courseapp-loopcoding.onrender.com";

@@ -128,7 +128,7 @@ const Navbar = () => {
                     <Link to={"/courses"}>Courses</Link>
                   </li>
                   <li>
-                    <Link to={"/admin/course-form"}>Create Course</Link>
+                    <Link to={"/admin/create-course"}>Create Course</Link>
                   </li>
                   <li>
                     <button
