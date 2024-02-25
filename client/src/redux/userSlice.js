@@ -100,5 +100,5 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const { logOut, clearError,updateStateOnRegister } = authSlice.actions;
+export const { logOut, clearError, updateStateOnRegister } = authSlice.actions;
 export default authSlice.reducer;

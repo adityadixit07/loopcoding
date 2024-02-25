@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 import userSlice from "./userSlice";
 import adminSlice from "./adminSlice";
 import courseSlice from "./courseSlice";
-
+import alertSlice from "./alertSlice";
 const persistConfig = {
   key: "root",
   storage,
@@ -15,11 +15,7 @@ export const store = configureStore({
     auth: persistReducer(persistConfig, userSlice),
     admin: persistReducer(persistConfig, adminSlice),
     courses: persistReducer(persistConfig, courseSlice),
-    // user: userReducer,
-    // course: courseReducer,
-    // blog: blogReducer,
-    // instructor: instructorReducer,
-    // contact: contactReducer,
+    alerts: alertSlice.reducer,
   },
 });
 

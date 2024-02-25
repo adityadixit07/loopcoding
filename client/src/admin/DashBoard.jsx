@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaUser,
@@ -7,8 +7,16 @@ import {
   FaSignOutAlt,
   FaChalkboardTeacher,
 } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { AdminlogOut } from "../redux/adminSlice";
 
 const DashBoard = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logOut = () => {
+    dispatch(AdminlogOut());
+    navigate("/courses");
+  };
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -35,16 +43,17 @@ const DashBoard = () => {
           </li>
         </ul>
         <div className="absolute bottom-0 w-full border-t">
-          <button className="w-full py-2 flex items-center justify-center space-x-2 text-gray-600">
+          <button
+            className="w-full py-2 flex items-center justify-center space-x-2 text-gray-600"
+            onClick={logOut}
+          >
             <FaSignOutAlt />
             <span>Logout</span>
           </button>
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 p-8">
-        {/* Content goes here */}
         <h1 className="text-3xl font-semibold mb-4">Welcome, Admin!</h1>
         <p className="text-gray-600">
           This is your admin dashboard. You can manage users, courses, and

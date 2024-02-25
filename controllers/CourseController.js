@@ -1,32 +1,44 @@
+import dataUri from "../middleware/dataUri.js";
 import { Admin } from "../models/Admin.js";
 import { Course } from "../models/Course.js";
+import cloudinary from "cloudinary";
 
 class CourseController {
   // create a new course
+
   static createCourse = async (req, res) => {
-    const { title, description, price, discount, thumbnail, topicTags } =
-      req.body;
-    if (
-      !title ||
-      !description ||
-      !price ||
-      !discount ||
-      !thumbnail ||
-      !topicTags
-    ) {
+    const { title, description, price, discount, topicTags } = req.body;
+
+    const stripHtmlTags = (html) => {
+      return html.replace(/<[^>]*>?/gm, "");
+    };
+
+    if (!title || !description || !price || !discount || !topicTags) {
       return res
         .status(400)
-        .json({ success: false, message: "Please fill in all fields" });
+        .json({ success: false, message: "Please fill all fields" });
     }
+    const thumbnail = req.file;
+    if (!thumbnail) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please upload a thumbnail" });
+    }
+    const thumbnailUrl = dataUri(thumbnail);
     try {
+      const mycloud = await cloudinary.v2.uploader.upload(thumbnailUrl.content);
+      const sanitizedTopicTags = topicTags.split(",").map((tag) => tag.trim());
       const course = await Course.create({
         createdBy: req.admin._id,
         title,
-        description,
+        description: stripHtmlTags(description),
         price,
         discount,
-        thumbnail,
-        topicTags: topicTags.map((tag) => tag.replace(/\s/g, "")),
+        thumbnail: {
+          image: mycloud.secure_url,
+          public_id: mycloud.public_id,
+        },
+        topicTags: sanitizedTopicTags,
         totalPrice: price - (price * discount) / 100,
       });
       await course.save();
@@ -111,6 +123,42 @@ class CourseController {
       res.status(200).json({
         data: course,
         message: "Course updated successfully",
+        success: true,
+      });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  };
+
+  // upload video on particular course
+  static uploadCourseOnVideo = async (req, res) => {
+    const id = req.params.courseId;
+    try {
+      if (id === undefined) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Please provide a course id" });
+      }
+      const video = req.file;
+      if (!video) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Please upload a video" });
+      }
+      const videoUrl = dataUri(video);
+      const mycloud = await cloudinary.v2.uploader.upload(videoUrl.content);
+
+      const course = await Course.findById(id);
+      if (!course) {
+        return res.status(404).json({
+          success: false,
+          message: "Course not found",
+        });
+      }
+      await course.videos.push(mycloud.secure_url);
+      res.status(200).json({
+        data: course,
+        message: "Video uploaded successfully",
         success: true,
       });
     } catch (error) {

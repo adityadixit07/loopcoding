@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
+import cloudinary from "cloudinary";
 import CourseRoutes from "./routes/CourseRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import dbConnect from "./connection/dbConnect.js";
@@ -24,6 +25,12 @@ app.use(cookieParser({ httpOnly: true }));
 
 dbConnect();
 
+cloudinary.v2.config({
+  cloud_name: "dagberjs9",
+  api_key: "528898217127654",
+  api_secret: "JkbejflGJoG2zQL5Eku_Hb9Xghc",
+  secure: true,
+});
 
 // routes
 app.use("/api/user", UserRoutes);
@@ -36,8 +43,6 @@ app.listen(PORT, () => {
     `Server is running on port ${PORT} url: http://localhost:${PORT}`
   );
 });
-
-
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("./client/dist"));

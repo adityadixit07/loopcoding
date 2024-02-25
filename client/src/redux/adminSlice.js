@@ -54,6 +54,8 @@ export const adminLogin = createAsyncThunk(
       const { data } = response;
       if (data?.success) {
         toast.success(data?.message);
+        // store token in local storage
+        localStorage.setItem("token", data?.token);
       }
       return data;
     } catch (error) {

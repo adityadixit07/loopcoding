@@ -37,7 +37,7 @@ const Navbar = () => {
   const handleAdminLogout = async () => {
     dispatch(AdminlogOut());
     toast.success("Logout Successfully");
-    navigate("/courses");
+    navigate("/admin");
   };
 
   // fetch the courses on page load
@@ -118,6 +118,32 @@ const Navbar = () => {
                   </div>
                 </li>
               </>
+            ) : isAdmin ? (
+              <>
+                <ul className="flex items-center gap-5">
+                  <li>
+                    <Link to={"/admin/dashboard"}>DashBoard</Link>
+                  </li>
+                  <li>
+                    <Link to={"/courses"}>Courses</Link>
+                  </li>
+                  <li>
+                    <Link to={"/admin/course-form"}>Create Course</Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        handleAdminLogout();
+                      }}
+                      className="text-emerald-800 font-semibold text-xl flex items-center gap-2"
+                    >
+                      <span>
+                        <MdLogout />
+                      </span>
+                    </button>
+                  </li>
+                </ul>
+              </>
             ) : (
               <>
                 <li className="mr-5">
@@ -135,16 +161,18 @@ const Navbar = () => {
               </>
             )}
           </ul>
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="py-2 pl-8 pr-4 border rounded-full focus:outline-none focus:border-emerald-500"
-            />
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-              <FaSearch className="text-gray-500 border-b-2 " />
+          {isAdmin === false && (
+            <div className="relative flex items-center">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="py-2 pl-8 pr-4 border rounded-full focus:outline-none focus:border-emerald-500"
+              />
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <FaSearch className="text-gray-500 border-b-2 " />
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-xl focus:outline-none">

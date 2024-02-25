@@ -11,7 +11,6 @@ const API = axios.create({
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
-    console.log(req.headers, "req.headers");
     req.headers.cookie = `token=${localStorage.getItem("token")}`;
   }
   return req;
