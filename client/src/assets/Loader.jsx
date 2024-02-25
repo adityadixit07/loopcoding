@@ -9,3 +9,16 @@ const Loader = () => {
 };
 
 export default Loader;
+
+export const Loading = () => {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex space-x-2 mb-4">
+        <div className="w-6 h-6 bg-blue-500 rounded-full animate-bounce"></div>
+        <div className="w-6 h-6 bg-green-500 rounded-full animate-bounce"></div>
+        <div className="w-6 h-6 bg-yellow-500 rounded-full animate-bounce"></div>
+      </div>
+      <p className="text-lg font-semibold text-gray-800">Loading...</p>
+    </div>
+  );
+};

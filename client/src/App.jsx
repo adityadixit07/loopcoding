@@ -17,9 +17,22 @@ import UserCart from "./user/UserCart";
 import AdminRoute from "./AdminRoute";
 import CourseForm from "./admin/CourseForm";
 import PrivateRoute from "./utils/PrivateRoute";
+import { useEffect, useState } from "react";
+import { Loading } from "./assets/Loader";
 const App = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { isAdmin } = useSelector((state) => state.admin);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <BrowserRouter>
       <Navbar />
