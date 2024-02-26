@@ -23,6 +23,7 @@ export const loginAdmin = async (req, res) => {
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
+    admin.password = "too see others password is a bad habit";
     res.status(200).json({
       success: true,
       message: ` logged in successfully`,
