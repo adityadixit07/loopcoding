@@ -9,7 +9,7 @@ const InstructorProfile = () => {
         />
       </div>
       <div className="md:flex md:items-center md:justify-evenly max-w-[1300px] mx-auto">
-    {/* Information */}
+        {/* Information */}
         <div className="text-center md:text-left">
           <h1 className="text-3xl font-bold text-emerald-900 mb-2 py-1">
             Aditya Dixit

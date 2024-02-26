@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { Loading } from "./assets/Loader";
 import CourseDetail from "./components/CourseDetail";
 import UpdateCourse from "./admin/UpdateCourse";
+import AdminProfile from "./admin/AdminProfile";
 const App = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { isAdmin } = useSelector((state) => state.admin);
@@ -65,8 +66,12 @@ const App = () => {
         <Route element={<AdminRoute isAdmin={isAdmin} />}>
           <Route path="/admin/dashboard" element={<DashBoard />} />
           <Route path="/admin/create-course" element={<CourseForm />} />
-          {/* edit particular course */}
-          <Route path="/admin/edit-course/:title/:id" element={<UpdateCourse />} />
+          <Route
+            path="/admin/edit-course/:title/:id"
+            element={<UpdateCourse />}
+          />
+          {/* update admin profile */}
+          <Route path="/admin/profile" element={<AdminProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

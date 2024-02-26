@@ -1,5 +1,8 @@
 import express from "express";
-import { loginAdmin } from "../controllers/AdminController.js";
+import {
+  loginAdmin,
+  updateAdminProfile,
+} from "../controllers/AdminController.js";
 import authorizeAdmin from "../utils/authorizeAdmin.js";
 import CourseController from "../controllers/CourseController.js";
 import { authorizeAdminToken } from "../utils/AuthorizeUtils.js";
@@ -31,6 +34,12 @@ AdminRoutes.route("/upload-video/:courseId").put(
   authorizeAdminToken,
   uploadVideo,
   CourseController.uploadCourseOnVideo
+);
+
+// update admin profile
+AdminRoutes.route("/update-profile").put(
+  authorizeAdminToken,
+  updateAdminProfile
 );
 
 export default AdminRoutes;

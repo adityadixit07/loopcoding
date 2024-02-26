@@ -24,7 +24,7 @@ const TopInstructors = () => {
 
   return (
     <section className="py-16">
-      <Heading text={"Top Instructors"} />
+      <Heading text={"Instructors"} />
       <div>
         <div className="flex justify-center items-center flex-wrap gap-20">
           {instructors.map((instructor) => (

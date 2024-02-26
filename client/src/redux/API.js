@@ -1,13 +1,9 @@
 // axios interceptor
 import axios from "axios";
-import { MdLandslide } from "react-icons/md";
-
-// const server = "http://localhost:9898/api";
-const server = "https://courseapp-loopcoding.onrender.com";
 
 const API = axios.create({
-  // baseURL: server,
-  baseURL: "/api",
+  baseURL: "http://localhost:9898/api",
+  // baseURL: "https://courseapp-loopcoding.onrender.com/api",
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {

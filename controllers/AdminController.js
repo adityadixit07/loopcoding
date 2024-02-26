@@ -34,4 +34,38 @@ export const loginAdmin = async (req, res) => {
   }
 };
 
+export const updateAdminProfile = async (req, res) => {
+  try {
+    const { name, website, totalExp, about } = req.body;
+    let adminProfile = await Admin.findById(req.admin._id);
+    if (!name || !website || !totalExp || !about) {
+      res.status(404).json({
+        success: false,
+        message: "Fields are missing...☹",
+      });
+    }
+    if (adminProfile) {
+      adminProfile.name = name;
+      adminProfile.website = website;
+      adminProfile.totaLExp = totalExp;
+      adminProfile.about = about;
+      await adminProfile.save();
 
+      return res.status(200).json({
+        success: true,
+        message: "Profile Updated successfully 🎉",
+        data: adminProfile,
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Admin profile not found",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Heading from "./Heading";
 import { motion } from "framer-motion";
 import { FiUsers } from "react-icons/fi";
@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../assets/Loader";
 import toast from "react-hot-toast";
 import { GoArrowUpRight } from "react-icons/go";
+import { getAllCourses } from "../redux/courseSlice";
 
 const Courses = () => {
   const { courses, isLoading } = useSelector((state) => state.courses);
-
+  const dispatch = useDispatch();
   const memoizedCourseCards = useMemo(
     () =>
       courses?.data?.map((course) => (
@@ -18,6 +19,11 @@ const Courses = () => {
       )),
     [courses]
   );
+
+  useEffect(() => {
+    dispatch(getAllCourses({}));
+  }, [dispatch]);
+
   return (
     <div className="pt-[6rem] pb-6">
       <Heading text={"Explore our Courses"} />
@@ -41,14 +47,19 @@ export const CourseCard = ({ course }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const discountedPrice = course.price - (course.price * course.discount) / 100;
   const discountPercentage = course.discount;
-  const handlePurchase = () => {
-    toast.success("Wait few days..... You can able to do purchase very soon");
-  };
   const navigate = useNavigate();
+  const handlePurchase = () => {
+    if (isLoggedIn) {
+      navigate(`/course/${course.title}/${course._id}`);
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <motion.div
-      className="bg-white p-6 rounded-md shadow-lg border border-gray-200 cursor-pointer transition-transform duration-300 hover:scale-105  hover:border hover:border-orange-400 transition-ease-in-out"
+      className="bg-white p-6 rounded-md shadow-lg border border-gray-200 cursor-pointer transition-transform duration-300 hover:scale-105  hover:border hover:border-orange-400 transition-ease-in-out "
+      style={{ minHeight: "550px", maxHeight: "550px" }}
       whileHover={{ scale: 1.05 }}
     >
       <img
@@ -69,11 +80,22 @@ export const CourseCard = ({ course }) => {
         </span>
       </h3>
 
-      <p className="text-gray-700 mb-4">{course.description}</p>
+      <p
+        className="text-gray-700 mb-4 hover:text-gray-800"
+        onClick={() => {
+          const formattedTitle = course.title.replace(/\s+/g, "-");
+          navigate(`/course/${formattedTitle}/${course._id}`);
+        }}
+      >
+        {/* trim the course descrioton */}
+        {course.description.length > 30
+          ? course.description.slice(0, 30) + "...."
+          : course.description}
+      </p>
       <div className="flex justify-between items-center">
         {/* toic tags */}
         <div className="flex justify-start items-center flex-row  gap-3 flex-wrap">
-          {course.topicTags?.map((tag, index) => (
+          {course.topicTags.slice(0, 3)?.map((tag, index) => (
             <span
               key={index}
               className="border shadow-innner text-gray-700  rounded-md px-2 py-1"
