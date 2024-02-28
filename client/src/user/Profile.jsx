@@ -43,12 +43,17 @@ const Profile = () => {
         amount: 9.99,
         date: "2023-12-01",
       },
-      // Add more payment history
     ],
   };
 
   const [showPaymentHistory, setShowPaymentHistory] = useState(false);
   const [showPurchasedCourses, setShowPurchasedCourses] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handleEdit = () => {
+    window.alert("edit the detail");
+    setIsOpen(true);
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen py-16 px-4 sm:px-6 lg:px-8 pt-[6rem]">
@@ -178,13 +183,53 @@ const Profile = () => {
               </div>
             )}
             <div className="mt-6">
-              <button className="text-sm text-blue-500 flex items-center focus:outline-none">
+              <button
+                className="text-sm text-blue-500 flex items-center focus:outline-none"
+                onClick={handleEdit}
+              >
                 <FaEdit className="mr-1" />
                 Edit Details
               </button>
             </div>
           </div>
         </div>
+        {isOpen && (
+          <div className="flex bg-gray-300">
+            <div>
+              <h1>Edit form</h1>
+            </div>
+            <form
+              action=""
+              className="flex justify-start items-center flex-row flex-wrap"
+            >
+              <div>
+                <label htmlFor="website">Website</label>
+                <input type="text" placeholder="add website link" />
+              </div>
+              <div>
+                <label htmlFor="website">Twitter</label>
+                <input type="text" placeholder="add twitter profile" />
+              </div>
+              <div>
+                <label htmlFor="website">LinkedIn</label>
+                <input type="text" placeholder="add LinkedIn profile" />
+              </div>
+              <div>
+                <label htmlFor="website">Education</label>
+                <input type="text" placeholder="add Education most recent" />
+              </div>
+            </form>
+
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                window.alert("saving...");
+              }}
+            >
+              save
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -160,13 +160,15 @@ class UserController {
   // update user profile
   static updateProfile = async (req, res) => {
     try {
-      const user = await User.findById(req.user._id);
+      const userId = await User.findById(req.user._id);
       if (user) {
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
-        if (req.body.password) {
-          user.password = req.body.password;
-        }
+        user.detail.bio = req.body.bio || user.detail.bio;
+        user.detail.location = req.body.location || user.detail.location;
+        user.detail.website = req.body.webiste || user.detail.website;
+        user.detail.social.twitter = req.body.twitter;
+
         const updatedUser = await user.save();
         return res.status(200).json({
           success: true,

@@ -10,6 +10,7 @@ import CourseRoutes from "./routes/CourseRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import dbConnect from "./connection/dbConnect.js";
 import AdminRoutes from "./routes/AdminRoutes.js";
+import BlogRoutes from "./routes/BlogRoutes.js";
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ cloudinary.v2.config({
 app.use("/api/user", UserRoutes);
 app.use("/api/courses", CourseRoutes);
 app.use("/api/admin", AdminRoutes);
+app.use("/api/blog", BlogRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
@@ -47,6 +49,8 @@ app.listen(PORT, () => {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("./client/dist"));
 }
+
+
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const staticPath = path.join(__dirname, "./client/dist");

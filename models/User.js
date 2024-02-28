@@ -29,6 +29,63 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
+  detail: [
+    {
+      bio: {
+        type: String,
+        default: "Not added Yet",
+      },
+      location: {
+        type: String,
+        default: "Not added Yet",
+      },
+      website: {
+        type: String,
+        default: "Not added Yet",
+      },
+      social: {
+        twitter: {
+          type: String,
+          default: "Not added Yet",
+        },
+        facebook: {
+          type: String,
+          default: "Not added Yet",
+        },
+        linkedin: {
+          type: String,
+          default: "Not added Yet",
+        },
+        youtube: {
+          type: String,
+          default: "Not added Yet",
+        },
+      },
+      education: {
+        degree: {
+          type: String,
+          default: "Not added Yet",
+        },
+        major: {
+          type: String,
+          default: "",
+        },
+        university: {
+          type: String,
+          default: "",
+        },
+        graduationYear: {
+          type: String,
+          default: "",
+        },
+      },
+      resume: {
+        type: String,
+        default: "",
+      },
+    },
+  ],
+
   purchasedCourses: [
     {
       type: mongoose.Schema.Types.ObjectId,

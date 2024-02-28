@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../assets/Loader";
 import { GoArrowUpRight } from "react-icons/go";
 import { getAllCourses } from "../redux/courseSlice";
+import { hideLoading } from "../redux/alertSlice";
 
 const Courses = () => {
   const { courses, isLoading } = useSelector((state) => state.courses);
@@ -20,11 +21,21 @@ const Courses = () => {
   );
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      if (isLoading) {
+        alert("Loading is taking longer than expected.");
+      }
+    }, 10000);
+    // cleanup function
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
+  useEffect(() => {
     dispatch(getAllCourses({}));
   }, [dispatch]);
 
   return (
-    <div className="pt-[6rem] pb-6 bg-gray-100 dark:bg-gray-800">
+    <div className="pt-[6rem] pb-6">
       <Heading text={"Explore our Courses"} />
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
