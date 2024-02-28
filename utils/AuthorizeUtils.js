@@ -4,6 +4,7 @@ import { Admin } from "../models/Admin.js";
 
 export const authorizeAdminToken = async (req, res, next) => {
   const token = req.headers["authorization"].split(" ")[1].trim();
+  // console.log(token)
   if (!token) {
     return res.status(403).json({
       success: false,

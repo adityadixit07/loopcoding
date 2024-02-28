@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/register.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { adminLogin, clearError } from "../redux/adminSlice";
+import { logOut } from "../redux/userSlice";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const AdminLogin = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
 
   const handleLogin = async (e) => {
     e.preventDefault();

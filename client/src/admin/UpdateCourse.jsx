@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiClock, FiUsers, FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { IoPricetags } from "react-icons/io5";
 import { HiCurrencyRupee } from "react-icons/hi";
-import API from "../redux/API";
 import toast from "react-hot-toast";
 import { showLoading, hideLoading } from "../redux/alertSlice";
 import { updateCourseDetail } from "../redux/courseSlice";
@@ -33,6 +32,7 @@ const UpdateCourse = () => {
     setAddingModule(true);
   };
 
+  const navigate = useNavigate();
   // Logic to save module in database
   const saveModule = async () => {
     if (!newModuleTitle || !newModuleDescription) {
@@ -50,6 +50,7 @@ const UpdateCourse = () => {
         addModules({ courseId: id, modules: [newModule] })
       );
       dispatch(updateCourseDetail(action.payload.data));
+      navigate(`/course/${title}/${id}`);
     } catch (error) {
       console.error("Error adding module:", error);
       toast.error("Failed to add module. Please try again later.");

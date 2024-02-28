@@ -8,13 +8,13 @@ import {
   FaChalkboardTeacher,
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { AdminlogOut } from "../redux/adminSlice";
+import { adminlogOut } from "../redux/adminSlice";
 
 const DashBoard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logOut = () => {
-    dispatch(AdminlogOut());
+    dispatch(adminlogOut());
     navigate("/courses");
   };
   return (

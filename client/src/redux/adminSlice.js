@@ -10,7 +10,7 @@ const adminSlice = createSlice({
     isAdmin: false,
   },
   reducers: {
-    AdminlogOut: (state) => {
+    adminlogOut: (state) => {
       state.admin = null;
       state.error = null;
       state.isAdmin = false;
@@ -70,7 +70,6 @@ export const adminLogin = createAsyncThunk(
       const { data } = response;
       if (data?.success) {
         toast.success(data?.message);
-        // store token in local storage
         localStorage.setItem("token", data?.token);
       }
       return data;
@@ -109,7 +108,7 @@ export const addModules = createAsyncThunk(
 );
 
 export const updateAdminProfile = createAsyncThunk(
-  "/admin/update-profile",
+  "admin/update-profile",
   async ({ name, about, totalExp, website }, { rejectWithValue }) => {
     try {
       const response = await API.put(
@@ -140,5 +139,5 @@ export const updateAdminProfile = createAsyncThunk(
   }
 );
 
-export const { AdminlogOut, clearError, updateProfile } = adminSlice.actions;
+export const { adminlogOut, clearError, updateProfile } = adminSlice.actions;
 export default adminSlice.reducer;

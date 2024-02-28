@@ -14,7 +14,7 @@ import {
 import { BiSolidBookReader } from "react-icons/bi";
 import { TfiWrite } from "react-icons/tfi";
 import { getAllCourses } from "../redux/courseSlice";
-import { AdminlogOut } from "../redux/adminSlice";
+import { adminlogOut } from "../redux/adminSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,13 +29,13 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    dispatch(logOut());
+    await dispatch(logOut());
     toast.success("Logout successfully");
     navigate("/login");
   };
 
   const handleAdminLogout = async () => {
-    dispatch(AdminlogOut());
+    dispatch(adminlogOut());
     toast.success("Logout Successfully");
     navigate("/admin");
   };
@@ -46,7 +46,7 @@ const Navbar = () => {
   }, [dispatch]);
 
   return (
-    <div className="bg-white shadow-md p-6 fixed w-full z-10">
+    <div className="bg-white shadow-md p-6 fixed w-full z-10 ">
       <div className="container mx-auto flex justify-between items-center">
         <div className="brand">
           <Link

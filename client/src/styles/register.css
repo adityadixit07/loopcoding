@@ -1,15 +1,16 @@
-.register,.login {
-    background-image: url('../assets/bg.avif');
-    background-size: cover;
-    height: 100vh;
+.register,
+.login {
+  /* background-image: url("../assets/bg_img.png"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100vh;
 }
 
 .main {
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-  }
-  
-  .flipped {
-    transform: rotateY(180deg);
-  }
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
 
+.flipped {
+  transform: rotateY(180deg);
+}
