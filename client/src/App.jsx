@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      {(isAdmin || isLoggedIn) && <Navbar />}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
