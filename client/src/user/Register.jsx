@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../styles/register.css";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -38,11 +39,16 @@ const Register = () => {
   };
 
   return (
-    <div className="register flex items-center justify-center h[100vh]">
+    <motion.div
+      initial={{ y: "-40vh" }}
+      animate={{ y: 0 }}
+      transition={{ type: "tween", stiffness: 120 }}
+      className="login flex items-center justify-center "
+    >
       <div
         className={`main ${
           cardFlipped ? "flipped" : ""
-        } flex items-center flex-col justify-center bg-gray-100 p-8 rounded-md shadow-md md:w-96 lg:w-1/2 xl:w-1/3`}
+        } flex items-center flex-col justify-center shadow-xl bg-white p-8 rounded-md md:w-96 lg:w-1/2 xl:w-1/3`}
       >
         {registrationSuccess ? (
           <div className="flipped">
@@ -72,6 +78,7 @@ const Register = () => {
                   id="username"
                   required
                   className="mt-1 p-2 border-2 outline-none rounded-md w-full"
+                  placeholder="Enter Name"
                 />
               </div>
               <div className="mb-4">
@@ -89,6 +96,7 @@ const Register = () => {
                   id="email"
                   required
                   className="mt-1 p-2 border rounded-md w-full"
+                  placeholder="abc@gmail.com"
                 />
               </div>
               <div className="mb-4">
@@ -106,6 +114,7 @@ const Register = () => {
                   id="password"
                   required
                   className="mt-1 p-2 border rounded-md w-full"
+                  placeholder="********"
                 />
               </div>
               <button
@@ -132,7 +141,7 @@ const Register = () => {
           </>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

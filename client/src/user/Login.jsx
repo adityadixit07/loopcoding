@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/register.css";
 import { useDispatch } from "react-redux";
 import { clearError, loginUser } from "../redux/userSlice";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,8 +30,14 @@ const Login = () => {
   };
 
   return (
-    <div className="login flex items-center justify-center">
-      <div className="main flex items-center flex-col justify-center bg-gray-100 p-8 rounded-md shadow-md sm:w-full md:w-96 lg:w-1/2 xl:w-1/3">
+    <motion.div
+      initial={{ y: "-40vh" }}
+      animate={{ y: 0 }}
+      transition={{ type: "tween", stiffness: 120 }}
+      className="login flex items-center justify-center "
+    >
+      {/* <div className="login flex items-center justify-center "> */}
+      <div className="main flex items-center flex-col justify-center shadow-xl bg-white p-8 rounded-md sm:w-full md:w-96 lg:w-1/2 xl:w-1/3">
         <h1 className="text-2xl font-semibold mb-4">Welcome, Login</h1>
         <form className="flex flex-col w-full" onSubmit={handleLogin}>
           <div className="mb-4">
@@ -48,6 +55,7 @@ const Login = () => {
               id="email"
               required
               className="mt-1 p-2 border rounded-md w-full"
+              placeholder="abc@gmail.com"
             />
           </div>
           <div className="mb-4">
@@ -65,6 +73,7 @@ const Login = () => {
               id="password"
               required
               className="mt-1 p-2 border rounded-md w-full"
+              placeholder="*********"
             />
           </div>
           <button
@@ -89,7 +98,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
