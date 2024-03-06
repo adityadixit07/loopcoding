@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Categories from "./Categories";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import Testimonials from "./Testimonials";
 import TopInstructors from "./TopInstructers";
-import AssistanceBoard from "../assistance/AssistanceBoard";
-
+import axios from "axios";
 const Home = () => {
   return (
     <div className="pt-[5rem] min-h-screen">
-      {/* Hero Section */}
       <section
         className="bg-gradient-to-r from-teal-500 to-indigo-500
  text-white py-16"
@@ -62,8 +60,6 @@ const Home = () => {
         </div>
       </section>
 
-      <AssistanceBoard />
-
       {/* footer  */}
       <Footer />
     </div>
@@ -71,3 +67,48 @@ const Home = () => {
 };
 
 export default Home;
+
+export const SearchCourse = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `/api/courses/search?title=${searchInput}`
+      );
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto mt-8 p-4 bg-gray-100 rounded-lg shadow-lg">
+      <input
+        type="text"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+        placeholder="Search for courses..."
+        className="w-full px-4 py-2 mb-4 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-400"
+      />
+      <button
+        onClick={handleSearch}
+        className="block w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-400"
+      >
+        Search
+      </button>
+      <div className="mt-4">
+        {searchResults.map((course) => (
+          <div
+            key={course._id}
+            className="mb-4 p-4 bg-white rounded-md shadow-md"
+          >
+            <h2 className="text-xl font-semibold">{course.title}</h2>
+            <p className="text-gray-600">{course.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

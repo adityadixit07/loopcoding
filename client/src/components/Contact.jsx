@@ -18,7 +18,6 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     setFormData({
       name: "",
       email: "",
@@ -33,7 +32,7 @@ const Contact = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md mx-auto my-8 px-4 py-6 bg-white rounded-md shadow-md"
+        className="max-w-md mx-auto my-8 px-4 py-6 bg-white rounded-md shadow-inner border-l-2 border-orange-500"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Contact Us</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -47,6 +46,7 @@ const Contact = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              placeholder="Enter Name"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               required
             />
@@ -61,6 +61,7 @@ const Contact = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              placeholder="Enter Email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               required
             />
@@ -75,6 +76,7 @@ const Contact = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
+              placeholder="Enter Subject"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               required
             />
@@ -88,6 +90,7 @@ const Contact = () => {
               name="message"
               value={formData.message}
               onChange={handleChange}
+              placeholder="Add your message here"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               rows="4"
               required

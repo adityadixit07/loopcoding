@@ -1,235 +1,133 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import {
-  FaUser,
-  FaGraduationCap,
-  FaFileAlt,
-  FaAngleDown,
-  FaAngleUp,
-  FaEdit,
-} from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { showLoading, hideLoading } from "../redux/alertSlice";
+import toast from "react-hot-toast";
+import { updateProfile } from "../redux/userSlice";
+import API from "../redux/API";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
-  const user1 = {
-    data: {
-      name: "John Doe",
-      email: "john@example.com",
-      avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-      bio: "Passionate learner and tech enthusiast and a full-stack developer. I love to learn and share my knowledge with others.",
-    },
-    education: {
-      degree: "Bachelor of Science",
-      major: "Computer Science",
-      university: "University of Example",
-      graduationYear: "2022",
-      // Add more education details
-    },
-    resume: "Link to user's resume",
-    purchases: [
-      {
-        id: 1,
-        courseName: "React.js Masterclass",
-        instructor: "Jane Smith",
-        price: 49.99,
-        date: "2023-12-15",
-      },
-      // Add more purchased courses
-    ],
-    payments: [
-      {
-        id: 1,
-        description: "Monthly subscription",
-        amount: 9.99,
-        date: "2023-12-01",
-      },
-    ],
-  };
+  const [bio, setBio] = useState(user.bio || "");
+  const [github, setGithub] = useState(user.github || "");
+  const [linkedin, setLinkedin] = useState(user.linkedin || "");
+  const [degree, setDegree] = useState(user.degree || "");
+  const [major, setMajor] = useState(user.major || "");
+  const [university, setUniversity] = useState(user.university || "");
+  const [graduationYear, setGraduationYear] = useState(
+    user.graduationYear || ""
+  );
+  const [resume, setResume] = useState(user.resume || "");
+  const dispatch = useDispatch();
 
-  const [showPaymentHistory, setShowPaymentHistory] = useState(false);
-  const [showPurchasedCourses, setShowPurchasedCourses] = useState(false);
-
-  const [isOpen, setIsOpen] = useState(false);
-  const handleEdit = () => {
-    window.alert("edit the detail");
-    setIsOpen(true);
+  const handleUpdate = async () => {
+    dispatch(showLoading());
+    try {
+      // const formData = {
+      //   bio,
+      //   github,
+      //   linkedin,
+      //   degree,
+      //   major,
+      //   university,
+      //   graduationYear,
+      //   resume,
+      // };
+      // dispatch(updateProfile({formData, userId: user._id}));
+      const response = await API.put(
+        `/user/profile/update`,
+        {
+          bio,
+          github,
+          linkedin,
+          degree,
+          major,
+          university,
+          graduationYear,
+          resume,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const { data } = response;
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Try Again....", {
+        duration: 1000,
+      });
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen py-16 px-4 sm:px-6 lg:px-8 pt-[6rem]">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center py-8 text-gray-800">
-          Dashboard
-        </h1>
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-800 ">
-                  <FaUser className="inline-block mr-2 text-lg" />
-                  {user?.data.name}
-                </p>
-              </div>
-              <img
-                src={user1.data.avatar}
-                alt="profile"
-                className="w-12 h-12 rounded-full"
-              />
-            </div>
-            <p className="text-sm text-gray-600 mt-4">{user?.data.email}</p>
-            <p className="text-sm text-gray-600 mt-4">{user1.data.bio}</p>
-            <p className="text-sm text-gray-600 mt-2">{user1.data.location}</p>
-            {/* Education */}
-            {user1.education.degree && (
-              <div className="flex items-center mt-4">
-                <FaGraduationCap className="text-lg text-gray-500 mr-2" />
-                <div>
-                  <p className="text-sm font-semibold text-gray-800">
-                    {user1.education.degree}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {user1.education.major}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {user1.education.university},{" "}
-                    {user1.education.graduationYear}
-                  </p>
-                </div>
-              </div>
-            )}
-            {/* Resume */}
-            {user1.resume && (
-              <div className="flex items-center mt-4">
-                <FaFileAlt className="text-lg text-gray-500 mr-2" />
-                <a href={user1.resume} className="text-sm text-blue-500">
-                  {user1.resume}
-                </a>
-              </div>
-            )}
-            {/* Profile Completion */}
+    <div className=" px-4 pt-[8rem] max-w-md m-auto">
+      <h1 className="text-3xl font-semibold mb-4">Profile</h1>
 
-            {/* Show/hide options */}
-            <div className="mt-6 flex items-center">
-              <button
-                className="text-sm text-blue-500 flex items-center focus:outline-none mr-4"
-                onClick={() => setShowPaymentHistory(!showPaymentHistory)}
-              >
-                {showPaymentHistory ? (
-                  <>
-                    <FaAngleUp className="mr-1" />
-                    Hide Payment History
-                  </>
-                ) : (
-                  <>
-                    <FaAngleDown className="mr-1" />
-                    Show Payment History
-                  </>
-                )}
-              </button>
-              <button
-                className="text-sm text-blue-500 flex items-center focus:outline-none"
-                onClick={() => setShowPurchasedCourses(!showPurchasedCourses)}
-              >
-                {showPurchasedCourses ? (
-                  <>
-                    <FaAngleUp className="mr-1" />
-                    Hide Purchased Courses
-                  </>
-                ) : (
-                  <>
-                    <FaAngleDown className="mr-1" />
-                    Show Purchased Courses
-                  </>
-                )}
-              </button>
-            </div>
-            {/* Payment History */}
-            {showPaymentHistory && (
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                  Payment History
-                </h2>
-                <ul className="list-disc pl-6">
-                  {user1.payments.map((payment) => (
-                    <li key={payment.id} className="text-sm text-gray-600 mb-2">
-                      <span className="font-semibold">
-                        {payment.description}
-                      </span>{" "}
-                      - ${payment.amount} ({payment.date})
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {/* Purchased Courses */}
-            {showPurchasedCourses && (
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                  Purchased Courses
-                </h2>
-                <ul className="list-disc pl-6">
-                  {user1.purchases.map((purchase) => (
-                    <li
-                      key={purchase.id}
-                      className="text-sm text-gray-600 mb-2"
-                    >
-                      <span className="font-semibold">
-                        {purchase.courseName}
-                      </span>{" "}
-                      - ${purchase.price} ({purchase.date})
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <div className="mt-6">
-              <button
-                className="text-sm text-blue-500 flex items-center focus:outline-none"
-                onClick={handleEdit}
-              >
-                <FaEdit className="mr-1" />
-                Edit Details
-              </button>
-            </div>
-          </div>
-        </div>
-        {isOpen && (
-          <div className="flex bg-gray-300">
-            <div>
-              <h1>Edit form</h1>
-            </div>
-            <form
-              action=""
-              className="flex justify-start items-center flex-row flex-wrap"
-            >
-              <div>
-                <label htmlFor="website">Website</label>
-                <input type="text" placeholder="add website link" />
-              </div>
-              <div>
-                <label htmlFor="website">Twitter</label>
-                <input type="text" placeholder="add twitter profile" />
-              </div>
-              <div>
-                <label htmlFor="website">LinkedIn</label>
-                <input type="text" placeholder="add LinkedIn profile" />
-              </div>
-              <div>
-                <label htmlFor="website">Education</label>
-                <input type="text" placeholder="add Education most recent" />
-              </div>
-            </form>
-
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                window.alert("saving...");
-              }}
-            >
-              save
-            </button>
-          </div>
-        )}
+      <div className="space-y-4">
+        <label htmlFor="Bio"></label>
+        <input
+          type="text"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          placeholder="Add Bio"
+          className="text-gray-800 border-2 border-green-500 rounded-md p-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+        />
+        <input
+          type="text"
+          value={github}
+          onChange={(e) => setGithub(e.target.value)}
+          placeholder="Github"
+          className="input"
+        />
+        <input
+          type="text"
+          value={linkedin}
+          onChange={(e) => setLinkedin(e.target.value)}
+          placeholder="Linkedin"
+          className="input"
+        />
+        <input
+          type="text"
+          value={degree}
+          onChange={(e) => setDegree(e.target.value)}
+          placeholder="Degree"
+          className="input"
+        />
+        <input
+          type="text"
+          value={major}
+          onChange={(e) => setMajor(e.target.value)}
+          placeholder="Major"
+          className="input"
+        />
+        <input
+          type="text"
+          value={university}
+          onChange={(e) => setUniversity(e.target.value)}
+          placeholder="University"
+          className="input"
+        />
+        <input
+          type="text"
+          value={graduationYear}
+          onChange={(e) => setGraduationYear(e.target.value)}
+          placeholder="Graduation Year"
+          className="input"
+        />
+        <input
+          type="text"
+          value={resume}
+          onChange={(e) => setResume(e.target.value)}
+          placeholder="Resume"
+          className="input"
+        />
+        <button onClick={handleUpdate} className="btn">
+          Update
+        </button>
       </div>
     </div>
   );

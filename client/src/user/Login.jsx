@@ -36,9 +36,8 @@ const Login = () => {
       transition={{ type: "tween", stiffness: 120 }}
       className="login flex items-center justify-center "
     >
-      {/* <div className="login flex items-center justify-center "> */}
       <div className="main flex items-center flex-col justify-center shadow-xl bg-white p-8 rounded-md sm:w-full md:w-96 lg:w-1/2 xl:w-1/3">
-        <h1 className="text-2xl font-semibold mb-4">Welcome, Login</h1>
+        <h1 className="text-2xl font-semibold mb-4">Welcome 👋</h1>
         <form className="flex flex-col w-full" onSubmit={handleLogin}>
           <div className="mb-4">
             <label

@@ -67,7 +67,7 @@ export const CourseCard = ({ course }) => {
   };
 
   return (
-    <motion.div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+    <motion.div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:border-2 hover:border-emerald-500">
       <div className="flex justify-between items-center mb-4">
         <h3
           className="text-xl font-bold text-gray-800 dark:text-white truncate hover:cursor-pointer hover:text-emerald-700 hover:underline ease-linear "
@@ -108,9 +108,6 @@ export const CourseCard = ({ course }) => {
         <div>
           <p className="text-red-500 dark:text-red-400 font-bold line-through">
             ₹{course.price}
-          </p>
-          <p className="text-green-500 dark:text-green-400 font-bold">
-            ₹{discountedPrice}
           </p>
           <p className="text-gray-600 dark:text-gray-400">
             ({discountPercentage}% Off)

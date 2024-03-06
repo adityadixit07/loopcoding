@@ -22,6 +22,8 @@ import { Loading } from "./assets/Loader";
 import CourseDetail from "./components/CourseDetail";
 import UpdateCourse from "./admin/UpdateCourse";
 import AdminProfile from "./admin/AdminProfile";
+import AssistanceBoard from "./assistance/AssistanceBoard";
+import ForgotPassword from "./user/ForgotPassword";
 const App = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { isAdmin } = useSelector((state) => state.admin);
@@ -44,6 +46,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/courses" element={<Courses />} />
         <Route path="/course/:title/:id" element={<CourseDetail />} />
@@ -75,6 +78,7 @@ const App = () => {
           <Route path="/admin/profile" element={<AdminProfile />} />
         </Route>
       </Routes>
+      <AssistanceBoard />
     </BrowserRouter>
   );
 };

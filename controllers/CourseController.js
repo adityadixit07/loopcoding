@@ -238,6 +238,11 @@ class CourseController {
       const courses = await Course.find({
         topicTags: { $regex: new RegExp(topic, "i") },
       });
+      if (courses.length === 0) {
+        return res.status(200).json({
+          message: "No Course Found",
+        });
+      }
       res.status(200).json({
         data: courses,
         message: "Courses fetched successfully",
@@ -262,6 +267,8 @@ class CourseController {
       res.status(500).json({ success: false, message: error.message });
     }
   };
+
+  
 }
 
 export default CourseController;

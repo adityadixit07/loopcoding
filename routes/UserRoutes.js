@@ -15,6 +15,6 @@ UserRoutes.route("/addcourse/:courseId").post(
 UserRoutes.route("/profile").get(authorize, UserController.userProfile);
 
 // update profile
-UserRoutes.route("/profile/:userId").put(authorize, UserController.updateProfile);
+UserRoutes.route("/profile/update").put(authorize, UserController.updateProfile);
 
 export default UserRoutes;

@@ -7,7 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./redux/store.js";
 import { Toaster } from "react-hot-toast";
 
-export const server="http://localhost:9898/api";
+export const server = "http://localhost:9898/api";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

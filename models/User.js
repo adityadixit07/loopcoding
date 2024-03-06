@@ -35,31 +35,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "Not added Yet",
       },
-      location: {
+      github: {
         type: String,
         default: "Not added Yet",
       },
-      website: {
+      linkedin: {
         type: String,
         default: "Not added Yet",
-      },
-      social: {
-        twitter: {
-          type: String,
-          default: "Not added Yet",
-        },
-        facebook: {
-          type: String,
-          default: "Not added Yet",
-        },
-        linkedin: {
-          type: String,
-          default: "Not added Yet",
-        },
-        youtube: {
-          type: String,
-          default: "Not added Yet",
-        },
       },
       education: {
         degree: {

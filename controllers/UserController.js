@@ -160,26 +160,36 @@ class UserController {
   // update user profile
   static updateProfile = async (req, res) => {
     try {
-      const userId = await User.findById(req.user._id);
-      if (user) {
-        user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
-        user.detail.bio = req.body.bio || user.detail.bio;
-        user.detail.location = req.body.location || user.detail.location;
-        user.detail.website = req.body.webiste || user.detail.website;
-        user.detail.social.twitter = req.body.twitter;
-
-        const updatedUser = await user.save();
-        return res.status(200).json({
-          success: true,
-          message: "User profile updated successfully",
-          data: updatedUser,
-        });
+      const user = await User.findById(req.user._id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
       }
+
+      user.detail.bio = req.body.bio || user.detail.bio;
+      user.detail.github = req.body.github || user.detail.github;
+      user.detail.linkedin = req.body.linkedin || user.detail.linkedin;
+      user.detail.education.degree =
+        req.body.degree || user.detail.education.degree;
+      user.detail.education.major =
+        req.body.major || user.detail.education.major;
+      user.detail.education.university =
+        req.body.university || user.detail.education.university;
+      user.detail.education.graduationYear =
+        req.body.graduationYear || user.detail.education.graduationYear;
+      user.detail.resume = req.body.resume || user.detail.resume;
+
+      await user.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "User profile updated successfully",
+        data: user,
+      });
     } catch (error) {
+      console.error(error);
       return res.status(500).json({
         success: false,
-        message: error.message,
+        message: "Internal Server Error",
       });
     }
   };
