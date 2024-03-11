@@ -94,11 +94,10 @@ li a {
   bottom: -2px;
   width: 100%;
   height: 2px;
-  background-color: #FFA500; /* Change color as needed */
+  background-color: #ffa500; /* Change color as needed */
   animation: running-line 1s infinite;
 }
 
- 
 @keyframes running-line {
   0% {
     left: 0;
@@ -113,3 +112,4 @@ li a {
     width: 0;
   }
 }
+

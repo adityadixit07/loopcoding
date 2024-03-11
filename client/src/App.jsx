@@ -24,6 +24,7 @@ import UpdateCourse from "./admin/UpdateCourse";
 import AdminProfile from "./admin/AdminProfile";
 import AssistanceBoard from "./assistance/AssistanceBoard";
 import ForgotPassword from "./user/ForgotPassword";
+import BlogDetailsWithSuggestion from "./components/BlogDetailWithSuggestion";
 const App = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { isAdmin } = useSelector((state) => state.admin);
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/course/:title/:id" element={<CourseDetail />} />
 
         <Route path="/blogs" element={<Blog />} />
+        <Route path="/blog/:id3" element={<BlogDetailsWithSuggestion />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<PageNotFound />} />
 

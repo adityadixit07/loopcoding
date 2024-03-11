@@ -91,11 +91,28 @@ class UserController {
       if (!course) {
         return res.status(404).json({ message: "Course not found" });
       }
-      // if user is logged in then add course tocar to tuser model and also te course detail in cartmodel of cartItems array
+      // if user is logged in then add course to art to to user model and also te course detail in cartmodel of cartItems array
       if (req.user) {
         const user = await User.findOne({ email: req.user.email }).select(
           "-password"
         );
+        const isCoursePurchased = user.purchasedCourses.includes(courseId);
+        if (isCoursePurchased) {
+          return res.status(400).json({
+            message: "You have already purchased this course",
+          });
+        }
+        const isCourseInCart = user.cartItems.includes(courseId);
+        if (isCourseInCart) {
+          return res.status(400).json({ message: "Course is already in cart" });
+        }
+        user.cartItems.push(courseId);
+        await user.save();
+        return res.status(200).json({
+          success: true,
+          message: "Course added to cart successfully",
+          data: user,
+        });
       }
     } catch (error) {
       console.error(error);
@@ -160,7 +177,9 @@ class UserController {
   // update user profile
   static updateProfile = async (req, res) => {
     try {
-      const user = await User.findById(req.user._id);
+      const id = req.params.id;
+      console.log(id);
+      const user = await User.findById({ _id: id });
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }

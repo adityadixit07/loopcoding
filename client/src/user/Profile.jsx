@@ -34,7 +34,7 @@ const Profile = () => {
       // };
       // dispatch(updateProfile({formData, userId: user._id}));
       const response = await API.put(
-        `/user/profile/update`,
+        `/user/profile/update/${user?._id}`,
         {
           bio,
           github,

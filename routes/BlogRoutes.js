@@ -1,7 +1,10 @@
 import express from "express";
-import { textTranslation } from "../controllers/BlogController.js";
+import { uploadFile } from "../middleware/uploadVide.js";
+import BlogController from "../controllers/BlogController.js";
+
 const BlogRoutes = express.Router();
 
-BlogRoutes.route("/translate").post(textTranslation);
+BlogRoutes.route("/create-blog").post(uploadFile, BlogController.createBlog);
+BlogRoutes.route("/all-blogs").get(BlogController.allBlogs);
 
 export default BlogRoutes;
